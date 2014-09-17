@@ -1,20 +1,30 @@
 define([
     'backbone',
-    'src/views/main'
-], function(Backbone, MainView) {
+    'src/views/main',
+    'src/views/plugins/list',
+    'private/collections/plugins',
+], function(Backbone, MainView, PluginsListView, PluginsCollection) {
 
     "use strict";
 
     var router = Backbone.Router.extend({
 
         routes: {
-            "": "home"
+            "": "home",
+            "plugins": "plugins"
         },
 
         home: function() {
             var view = new MainView();
             view.render();
-        }
+        },
+
+        plugins: function() {
+            var view = new PluginsListView({
+                collection: new PluginsCollection()
+            });
+            view.render();
+        },
     });
 
     return router;
