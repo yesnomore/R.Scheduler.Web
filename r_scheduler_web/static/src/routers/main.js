@@ -2,7 +2,7 @@ define([
     'backbone',
     'src/views/main',
     'src/views/plugins/list',
-    'private/collections/plugins',
+    'src/collections/plugins',
 ], function(Backbone, MainView, PluginsListView, PluginsCollection) {
 
     "use strict";
@@ -14,12 +14,19 @@ define([
             "plugins": "plugins"
         },
 
-        home: function() {
-            var view = new MainView();
+        // home: function() {
+        //     var view = new MainView();
+        //     view.render();
+        // },
+
+        plugins: function() {
+            var view = new PluginsListView({
+                collection: new PluginsCollection()
+            });
             view.render();
         },
 
-        plugins: function() {
+        home: function() {
             var view = new PluginsListView({
                 collection: new PluginsCollection()
             });

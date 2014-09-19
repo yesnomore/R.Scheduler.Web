@@ -7,6 +7,9 @@
     "jquery": "1.11.1",
     "bootstrap": "~3.2.0",
     "requirejs": "~2.1.15",
-    "requirejs-text": "~2.0.12"
+    "requirejs-text": "~2.0.12",
+    "backgrid": "~0.3.5",
+    "backgrid-filter": "~0.3.5",
+    "moment": "~2.8.3"
   }
 }

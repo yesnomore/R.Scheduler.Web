@@ -1,29 +1,35 @@
 import cherrypy
 import os
 
-# if you have a config, import it here
-# from myproj import config
-
-from controllers import Root
+from home import Root
+from controllers.plugins import PluginsController
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-def get_app_config():
-    return {
-        '/static': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.debug' : True,
-            'tools.staticdir.dir': os.path.join(HERE, 'static'),
-        },
-        '/': {
-          'tools.sessions.on': True,
-          'tools.staticdir.root': os.path.abspath(os.getcwd())
-        },
+CONFIG_APP =  {
+    '/static': {
+        'tools.staticdir.on': True,
+        'tools.staticdir.debug' : True,
+        'tools.staticdir.dir': os.path.join(HERE, 'static'),
+    },
+    '/': {
+        'tools.sessions.on': True,
+        'tools.staticdir.root': os.path.abspath(os.getcwd())
     }
+}
 
-def get_app(config=None):
-    config = config or get_app_config()
-    cherrypy.tree.mount(Root(), '/', config = config)
+CONFIG_REST = {
+    '/': {
+        'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
+        'tools.sessions.on': True,
+        'tools.response_headers.on': True,
+        'tools.response_headers.headers': [('Content-Type', 'application/json')],
+    }
+}
+
+def get_app():
+    cherrypy.tree.mount(Root(), '/', config = CONFIG_APP)
+    cherrypy.tree.mount(PluginsController(), '/controllers/plugins', config = CONFIG_REST)
     return cherrypy.tree
 
 def start():

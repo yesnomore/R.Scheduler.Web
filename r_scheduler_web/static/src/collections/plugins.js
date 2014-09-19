@@ -1,7 +1,7 @@
 define([
     'backbone',
     'src/models/plugin',
-    'backbone-pageable'
+    'lib/backbone-pageable'
 ], function(Backbone, PluginModel) {
 
     "use strict";
@@ -24,17 +24,17 @@ define([
 
         mode: "server",
 
-        parseState: function(resp) {
-            return {
-                totalRecords: resp.count
-            };
-        },
+        // parseState: function(resp) {
+        //     return {
+        //         totalRecords: resp.count
+        //     };
+        // },
 
-        parseRecords: function(resp) {
-            return resp.items;
-        },
+        // parseRecords: function(resp) {
+        //     return resp.items;
+        // },
 
-        url: "plugins"
+        url: "controllers/plugins"
     });
 
     return plugins;

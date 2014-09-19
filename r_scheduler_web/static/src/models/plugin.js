@@ -9,13 +9,14 @@ define([
     var model = Backbone.Model.extend({
 
         defaults: {
-            name: "",
-            assemblyPath: "",
-        },
+            id: "0",
+            name: ""
+       },
 
-        urlRoot: "plugins",
+        urlRoot: "controllers/plugins",
 
         initialize: function() {
+            //Backbone.Model.prototype.initialize.call(this);
             //_.bindAll(this);
         },
     });
