@@ -10,10 +10,11 @@ define([
 
         defaults: {
             id: "0",
-            name: ""
+            name: "",
+            assemblyPath: ""
        },
 
-        urlRoot: "controllers/plugins",
+        urlRoot: "controllers/plugin",
 
         initialize: function() {
             //Backbone.Model.prototype.initialize.call(this);

@@ -5,8 +5,6 @@ define([
     'backgrid',
     'text!src/templates/plugins/index.html',
     'moment'
-    // 'backgrid-filter',
-    // 'backgrid-paginator'
 ], function(Backbone, _, $, Backgrid, template, moment) {
 
     "use strict";
@@ -16,15 +14,25 @@ define([
         el: ".main-content",
 
         columns: [{
-            name: "Id",
+            name: "id",
             label: "Id",
             editable: false,
             cell: "string"
         }, {
-            name: "Name",
+            name: "name",
             editable: false,
             label: "Name",
             cell: "string"
+        }, {
+            name: "name",
+            label: "",
+            cell: "html",
+            editable: false,
+            formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                fromRaw: function(rawValue) {
+                    return "<a href=\"/#plugins/edit/" + rawValue + "\">Details -></a>";
+                }
+            })
         }], 
 
         events: {
@@ -52,7 +60,7 @@ define([
 
             $grid.append(this.grid.render().$el);
 
-             var that = this;
+            var that = this;
             this.collection.fetch({
                 reset: true,
                 success: function() {
@@ -69,13 +77,14 @@ define([
             }
         },
 
-
         newPlugin: function() {
             // Backbone.Application.Routers.students.navigate('students/new?returnUrl=students', {
             //     trigger: true
             // });
-            Alert('Clicked on newPlugin')
-        }
+            Backbone.Application.Routers.main.navigate('plugins/new', {
+                trigger: true
+            });
+       }
     });
 
     return list;

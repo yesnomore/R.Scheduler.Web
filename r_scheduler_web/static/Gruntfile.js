@@ -24,7 +24,7 @@
             compile: {
                 options: {
                     baseUrl: ".",
-                    name: "main",
+                    name: "Content/main",
                     include: "lib/requirejs/require.js",
                     out: "dist/main.min.js",
                     wrap: true,

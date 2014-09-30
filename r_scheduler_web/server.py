@@ -3,6 +3,7 @@ import os
 
 from home import Root
 from controllers.plugins import PluginsController
+from controllers.plugins import PluginController
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -30,6 +31,7 @@ CONFIG_REST = {
 def get_app():
     cherrypy.tree.mount(Root(), '/', config = CONFIG_APP)
     cherrypy.tree.mount(PluginsController(), '/controllers/plugins', config = CONFIG_REST)
+    cherrypy.tree.mount(PluginController(), '/controllers/plugin', config = CONFIG_REST)
     return cherrypy.tree
 
 def start():
