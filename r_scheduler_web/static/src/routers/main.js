@@ -4,8 +4,10 @@ define([
     'src/views/plugins/list',
     'src/collections/plugins',
     'src/views/plugins/plugin',
+    'src/views/plugins/pluginDetails',
     'src/models/plugin',
-], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginModel) {
+    'src/models/pluginDetails',
+], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginDetailsView, PluginModel, PluginDetailsModel) {
 
     "use strict";
 
@@ -16,7 +18,8 @@ define([
             "plugins": "plugins",
             "plugins/new/": "newPlugin",
             "plugins/new": "newPlugin",
-            "plugins/edit/:id": "editPlugin"
+            "plugins/edit/:id": "editPlugin",
+            "plugins/details/:id": "pluginDetails"
         },
 
         // home: function() {
@@ -32,7 +35,7 @@ define([
         },
 
         editPlugin: function(id) {
-             var model = new PluginModel({
+            var model = new PluginModel({
                 id: id
             }),
 
@@ -51,13 +54,29 @@ define([
             document.title = "Edit Plugin";
         },
 
-        newPlugin: function(id) {
+        newPlugin: function() {
             var that = this,
                 model = new PluginModel();
 
+            var view = new PluginView({
+                        model: model
+                    });
+
+            view.render();
+
+            document.title = "Register Plugin";
+        },
+
+        pluginDetails: function(id) {
+            var model = new PluginDetailsModel({
+                id: id
+            }),
+
+            that = this;
+
             model.fetch({
                 success: function() {
-                    var view = new PluginView({
+                    var view = new PluginDetailsView({
                         model: model
                     });
 
@@ -65,8 +84,8 @@ define([
                 }
             });
 
-            document.title = "Register Plugin";
-        },
+            document.title = "Plugin Details";
+        },        
 
         home: function() {
             var view = new PluginsListView({

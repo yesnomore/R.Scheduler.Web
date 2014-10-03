@@ -13,24 +13,9 @@ class PluginsController(object):
     @cherrypy.tools.accept(media='application/json')
     def GET(self, currentPage=1, pageSize=50):
         #print("in PluginsController GET ", currentPage)
-
         #url = "http://localhost:5000/api/plugins"
-
-        r = requests.get("http://localhost:5000/api/plugins")
-
+        r = requests.get("http://ruffer-sche-uat:5000/api/plugins")
         print(r.json())
-
-        plugin1 = TestPlugin()
-        plugin1.Name = "TestPlugin1"
-        plugin1.Id = "1"
-
-        plugin2 = TestPlugin()
-        plugin2.Name = "TestPlugin2"
-        plugin2.Id = "2"
-        col = [plugin1.__dict__, plugin2.__dict__]
-        retval = json.dumps([{"Name": "TestPlugin1", "Id": 1 }, { "Name": "TestPlugin2", "Id": 2 }])
-        #retval = json.dumps(col)
-        print (retval)
         return r
 
 class PluginController(object):
@@ -40,16 +25,27 @@ class PluginController(object):
     @cherrypy.tools.accept(media='application/json')
     def GET(self, id=None):
         print("in PluginController GET, id=", id)
-
-        r = requests.get("http://localhost:5000/api/plugins/" + id)
+        r = requests.get("http://ruffer-sche-uat:5000/api/plugins/" + id)
         print(r.json())
+        return r
 
-        plugin1 = TestPlugin()
-        plugin1.name = "TestPlugin1"
-        plugin1.id = "1"
-        plugin1.assemblyPath = "TestPlugin1/AssemblyPath"
+    @cherrypy.tools.accept(media='application/json')
+    def POST(self):
+        payload = cherrypy.request.body.read()
+        print("in PluginController POST, payload=", payload)
 
-        retval = json.dumps(plugin1.__dict__)
-        #retval = json.dumps(col)
-        print (retval)
+        #payload = {'key1': 'value1', 'key2': 'value2'}
+        r = requests.post("http://ruffer-sche-uat:5000/api/plugins/", data=payload, headers={'content-type': 'application/json'})
+        print(r.json())
+        return r
+
+class PluginDetailsController(object):
+
+    exposed = True
+
+    @cherrypy.tools.accept(media='application/json')
+    def GET(self, id=None):
+        print("in PluginDetailsController GET, id=", id)
+        r = requests.get("http://ruffer-sche-uat:5000/api/plugins/" + id)
+        print(r.json())
         return r

@@ -30,7 +30,17 @@ define([
             editable: false,
             formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
                 fromRaw: function(rawValue) {
-                    return "<a href=\"/#plugins/edit/" + rawValue + "\">Details -></a>";
+                    return "<a href=\"/#plugins/edit/" + rawValue + "\">Edit</a>";
+                }
+            })
+        }, {
+            name: "name",
+            label: "",
+            cell: "html",
+            editable: false,
+            formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
+                fromRaw: function(rawValue) {
+                    return "<a href=\"/#plugins/details/" + rawValue + "\">Details -></a>";
                 }
             })
         }], 

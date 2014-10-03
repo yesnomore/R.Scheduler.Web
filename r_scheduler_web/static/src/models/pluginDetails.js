@@ -9,12 +9,12 @@ define([
     var model = Backbone.Model.extend({
 
         defaults: {
-            //id: "",
             name: "",
-            assemblyPath: ""
+            assemblyPath: "",
+            triggerDetails: []
        },
 
-        urlRoot: "controllers/plugin",
+        urlRoot: "controllers/pluginDetails",
         contentType: "application/json",
 
         initialize: function() {

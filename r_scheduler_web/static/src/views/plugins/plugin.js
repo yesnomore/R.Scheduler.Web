@@ -37,17 +37,27 @@ define([
 
         render: function() {
             this.$el.html(_.template(template));
-            //this.$el.html('1 <input id="id" type="text"><input id="name" type="text"> <input id="assemblyPath" type="text">');
 
             this.stickit();
-
-            //toastr.success("Successfully rendered the plugin view");
 
             return this;
         },
 
         addPlugin: function() {
-            toastr.success("Clicked addPlugin");
+            $("#create").button('loading');
+
+            this.model.save({}, {
+                            success: function(model, response) {
+                                console.log('SUCCESS:');
+                                console.log(response);
+                            }});
+
+            //this.model.save();
+
+            $("#create").button('reset');
+
+            toastr.success("Successfully registered plugin");
+
             return false;
         },
     });

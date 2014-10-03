@@ -14,6 +14,7 @@
         "backgrid": 'lib/backgrid/backgrid',
         "lunr": 'lib/lunr/lunr',
         "backgrid-filter": 'lib/backgrid/extensions/filter/backgrid-filter',
+        'backgrid-moment': 'lib/backgrid/extensions/moment-cell/backgrid-moment-cell'
         // 'backgrid-paginator': 'lib/backgrid-paginator.min',
     },
     shim: {        
@@ -44,6 +45,10 @@
         },
         'backgrid-filter': {
             deps: ["jquery", 'underscore', 'backbone', 'backgrid', 'lunr'],
+            exports: "Backgrid.Extension"
+        },
+        'backgrid-moment': {
+            deps: ["jquery", 'underscore', 'backbone', 'backgrid'],
             exports: "Backgrid.Extension"
         },
     },
