@@ -9,9 +9,10 @@
 
 @import url('bootstrap/bootstrap.min.css');
 
+@import url('backgrid.css');
+
 /*@import url('../Scripts/app/lib/backgrid/extensions/filter/backgrid-filter.css');
 
-@import url('lib/backgrid/backgrid.css');
 
 @import url('../Scripts/app/lib/backgrid/extensions/paginator/backgrid-paginator.css');
 

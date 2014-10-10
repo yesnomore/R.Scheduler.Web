@@ -1,5 +1,8 @@
 ﻿require.config({
     waitSeconds: 30,
+    config: {
+        'restUrl': "http://ruffer-sche-uat:5000"
+    },
     urlArgs: "version=0.0",
     //baseUrl: "/static",
     paths: {
@@ -56,6 +59,8 @@
 });
 
 window.require = require;
+window.urlRoot = "http://ruffer-sche-uat:5000";
+
 
 require(['backbone',
          'jquery',
@@ -66,7 +71,7 @@ require(['backbone',
 function (Backbone, $, Router, bootstrap, require) {
 
     //window.define = define;
- 
+
     $.support.cors = true;
 
     Backbone.Application = Backbone.Application || {};

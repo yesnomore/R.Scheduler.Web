@@ -55,6 +55,14 @@ define([
              displayFormat: "YYYY-MMM-DD HH:mm:ss"
             })
         },{
+            name: "previousFireTimeUtc",
+            label: "Previous Fire Time",
+            editable: false,
+            cell: Backgrid.Extension.MomentCell.extend({
+              modelFormat: "YYYY/M/D/H/m/s",
+              displayFormat: "YYYY-MMM-DD HH:mm:ss"
+            })
+        },{
             name: "nextFireTimeUtc",
             label: "Next Fire Time",
             editable: false,

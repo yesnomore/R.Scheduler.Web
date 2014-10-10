@@ -34,7 +34,8 @@ define([
         //     return resp.items;
         // },
 
-        url: "controllers/plugins"
+        //url: "controllers/plugins"
+        url: window.urlRoot + "/api/plugins"
     });
 
     return plugins;

@@ -2,7 +2,7 @@ define([
     'backbone',
     'underscore',
     'jquery'
-], function(Backbone, _, $) {
+], function(Backbone, _, $, module) {
 
     "use strict";
 
@@ -14,7 +14,8 @@ define([
             triggerDetails: []
        },
 
-        urlRoot: "controllers/pluginDetails",
+        //urlRoot: "controllers/pluginDetails",
+        urlRoot: "http://ruffer-sche-uat:5000/api/plugins",
         contentType: "application/json",
 
         initialize: function() {

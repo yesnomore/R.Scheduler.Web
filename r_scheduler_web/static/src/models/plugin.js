@@ -14,7 +14,8 @@ define([
             assemblyPath: ""
        },
 
-        urlRoot: "controllers/plugin",
+        //urlRoot: "controllers/plugin",
+        urlRoot: window.urlRoot + "/api/plugins",
         contentType: "application/json",
 
         initialize: function() {

@@ -20,6 +20,7 @@ define([
 
         bindings: {
             '#name': 'name',
+            '#id': 'id',
             '#assemblyPath': 'assemblyPath'
         },
 
@@ -36,7 +37,9 @@ define([
         },
 
         render: function() {
-            this.$el.html(_.template(template));
+            this.$el.html(_.template(template, {
+                model: this.model,
+           }));
 
             this.stickit();
 
@@ -48,15 +51,10 @@ define([
 
             this.model.save({}, {
                             success: function(model, response) {
-                                console.log('SUCCESS:');
-                                console.log(response);
+                                toastr.success("Successfully registered plugin");
                             }});
 
-            //this.model.save();
-
             $("#create").button('reset');
-
-            toastr.success("Successfully registered plugin");
 
             return false;
         },
