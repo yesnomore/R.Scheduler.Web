@@ -1,0 +1,87 @@
+﻿<div role="main" class="container content">
+    
+    <div class="page-header">
+        <% if(model.get('id') != null) { %>
+        <h3>Edit Simple Trigger</h3>
+        <% } else {%>
+        <h3>Create New Simple Trigger</h3>
+        <% } %>
+    </div>
+
+        <div class="well" role="form">
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="name">Name</label>
+                    <input type="text" class="form-control" id="name" />
+                    <input type="hidden" id="id" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="group">Group</label>
+                    <input type="text" class="form-control" id="group" <% if(model.get('id') != null) { %> readonly=true <% } %> />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="jobName">Job Name</label>
+                    <input type="text" class="form-control" id="jobName" <% if(model.get('id') != null) { %> readonly=true <% } %> />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="jobGroup">Job Group</label>
+                    <input type="text" class="form-control" id="jobGroup" readonly=true />
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label for="startDateTime">Start DateTime</label>
+
+                <% if(model.get('id') == null ){ %>
+
+                        <div datepicker class="input-group date">
+                            <input id="startDateTime" data-format="dd/MM/yyyy hh:mm:ss" class="form-control" type="text" value="" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+
+                <% } else { %>
+
+                        <div datepicker class="input-group date">
+                            <input id="startDateTime" class="form-control" type="text" disabled="">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+
+                <% } %>
+            </div>
+
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="repeatCount">Repeat Count</label>
+                    <input type="number" min="0" step="1" class="form-control" id="repeatCount" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="register-form">
+                    <label for="repeatInterval">Repeat Interval</label>
+                    <select class="form-control" id="repeatInterval">
+                        <option value="">-select one-</option>
+                        <option value="00:01:00">Minutely</option>
+                        <option value="01:00:00">Hourly</option>
+                        <option value="1.00:00:00">Daily</option>
+                        <option value="7.00:00:00">Weekly</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" data-loading-text="Loading..." id="create">Submit</button>
+
+    </div>

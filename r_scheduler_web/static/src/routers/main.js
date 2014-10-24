@@ -5,9 +5,13 @@ define([
     'src/collections/plugins',
     'src/views/plugins/plugin',
     'src/views/plugins/pluginDetails',
+    'src/views/plugins/simpleTrigger',
+    'src/views/plugins/cronTrigger',
     'src/models/plugin',
     'src/models/pluginDetails',
-], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginDetailsView, PluginModel, PluginDetailsModel) {
+    'src/models/simpleTrigger',
+    'src/models/cronTrigger',
+], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginDetailsView, SimpleTriggerView, CronTriggerView, PluginModel, PluginDetailsModel, SimpleTriggerModel, CronTriggerModel) {
 
     "use strict";
 
@@ -19,7 +23,9 @@ define([
             "plugins/new/": "newPlugin",
             "plugins/new": "newPlugin",
             "plugins/edit/:id": "editPlugin",
-            "plugins/details/:id": "pluginDetails"
+            "plugins/details/:id": "pluginDetails",
+            "plugins/:id/newSimpleTrigger": "newSimpleTrigger",
+            "plugins/:id/newCronTrigger": "newCronTrigger"
         },
 
         // home: function() {
@@ -93,6 +99,36 @@ define([
             });
             view.render();
         },
+
+        newSimpleTrigger: function(id) {
+            
+            var model = new SimpleTriggerModel({
+                jobGroup: id
+            });
+
+            var view = new SimpleTriggerView({
+                        model: model
+                    });
+            
+            view.render();
+
+            document.title = "New Simple Trigger";
+        },
+
+        newCronTrigger: function(id) {
+            
+            var model = new CronTriggerModel({
+                jobGroup: id
+            });
+
+            var view = new CronTriggerView({
+                        model: model
+                    });
+            
+            view.render();
+
+            document.title = "New Cron Trigger";
+        }
     });
 
     return router;

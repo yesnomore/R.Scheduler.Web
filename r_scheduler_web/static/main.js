@@ -1,23 +1,21 @@
-﻿require.config({
+require.config({
     waitSeconds: 30,
-    config: {
-        'restUrl': "http://ruffer-sche-uat:5000"
-    },
     urlArgs: "version=0.0",
     //baseUrl: "/static",
     paths: {
-        "jquery": 'lib/jquery/jquery',
+        "jquery": 'lib/jquery-1.9.1',
         "toastr": 'lib/toastr',
         "underscore": 'lib/underscore/underscore',
         "moment": "lib/moment/moment",
         "backbone": 'lib/backbone/backbone',
         "backbone-pageable": 'lib/backbone-pageable',
         "backbone-stickit": 'lib/backbone.stickit',
-        "bootstrap": 'lib/bootstrap/dist/js/bootstrap',
+        "bootstrap": 'lib/bootstrap.min',
         "backgrid": 'lib/backgrid/backgrid',
         "lunr": 'lib/lunr/lunr',
         "backgrid-filter": 'lib/backgrid/extensions/filter/backgrid-filter',
-        'backgrid-moment': 'lib/backgrid/extensions/moment-cell/backgrid-moment-cell'
+        'backgrid-moment': 'lib/backgrid/extensions/moment-cell/backgrid-moment-cell',
+        'bootstrap-datetimepicker': 'lib/bootstrap-datetimepicker',
         // 'backgrid-paginator': 'lib/backgrid-paginator.min',
     },
     shim: {        
@@ -54,12 +52,18 @@
             deps: ["jquery", 'underscore', 'backbone', 'backgrid'],
             exports: "Backgrid.Extension"
         },
+        'bootstrap-datetimepicker': {
+            deps: ["jquery"],
+            exports: "$"
+        },
     },
     waitSeconds: 200
 });
 
 window.require = require;
-window.urlRoot = "http://ruffer-sche-uat:5000";
+//window.urlRoot = "http://ruffer-sche-uat:5000";
+window.urlRoot = "http://localhost:5000";
+//window.urlRoot = "http://ruffer-schedule:5000";
 
 
 require(['backbone',

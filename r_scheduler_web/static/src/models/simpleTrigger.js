@@ -9,13 +9,19 @@ define([
     var model = Backbone.Model.extend({
 
         defaults: {
-            name: "",
-            assemblyPath: "",
-            triggerDetails: []
-       },
+            triggerName: "",
+            triggerGroup: "",
+            jobGroup: "",
+            jobName: "",
+            startDateTime: "",
+            repeatCount: "",
+            repeatInterval: ""
+        },
 
-        //urlRoot: "controllers/pluginDetails",
-        urlRoot: window.urlRoot + "/api/plugins",
+        urlRoot: function() {
+            return window.urlRoot + "/api/plugins/" + this.attributes.jobGroup + "/simpleTriggers";
+        },
+
         contentType: "application/json",
 
         initialize: function() {

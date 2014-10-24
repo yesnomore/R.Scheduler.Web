@@ -11,11 +11,50 @@ define([
 
     "use strict";
 
+
+    var RemoveCell = Backgrid.RemoveCell = Backgrid.Cell.extend({
+
+        events: {
+            "click": "remove"
+        },
+
+        displayValue: function () {
+            return "<a>Remove</a>";
+        },
+
+        render: function () {
+            this.$el.empty();
+            this.$el.append(this.displayValue());
+            this.delegateEvents();
+            return this;
+        },
+
+        remove: function () {
+
+            var triggerName = this.model.get(this.column.get("name"));
+
+            var that = this;
+
+            $.ajax({
+                type: "DELETE",
+                async: false,
+                url: window.urlRoot + "/api/triggers?trigger=" + triggerName,
+                contentType: "application/json",
+                success: function (msg) { 
+                    that.model.collection.remove(that.model);
+                },
+                error: function (err) { alert(err.responseText); }
+            });
+        }
+    });
+
     var plugin = Backbone.View.extend({
 
         el: ".main-content",
 
         events: {
+            "click #newSimpleTrigger": "addSimleTrigger",
+            "click #newCronTrigger": "addCronTrigger",
         },
 
         bindings: {
@@ -28,6 +67,11 @@ define([
         },
 
         columns: [{
+            name: "type",
+            label: "Type",
+            editable: false,
+            cell: "string"
+        },{
             name: "name",
             label: "Name",
             editable: false,
@@ -79,12 +123,7 @@ define([
             name: "name",
             label: "",
             editable: false,
-            cell: "html",
-            formatter: _.extend({}, Backgrid.CellFormatter.prototype, {
-                fromRaw: function(rawValue) {
-                    return "<a href=\"/#triggers/remove/" + rawValue + "\">Remove</a>";
-                }
-            })
+            cell: "remove"
         }],
 
         render: function() {
@@ -105,6 +144,18 @@ define([
             $grid.append(this.grid.render().$el);
 
             return this;
+        },
+
+        addSimleTrigger: function() {
+            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('name') + '/newSimpleTrigger', {
+                trigger: true
+            });
+        },
+
+        addCronTrigger: function() {
+            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('name') + '/newCronTrigger', {
+                trigger: true
+            });
         }
     });
 
