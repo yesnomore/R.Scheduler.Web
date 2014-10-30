@@ -5,14 +5,16 @@ define([
     'toastr',
     'src/models/simpleTrigger',
     'text!src/templates/plugins/simpleTrigger.html',
+    "src/helpers/helperMethods",
+    'src/views/base',
     "moment",
     "bootstrap-datetimepicker",
     'backbone-stickit'
-], function(Backbone, _, $, toastr, SimpleTriggerModel, template) {
+], function(Backbone, _, $, toastr, SimpleTriggerModel, template, HelperMethods, BaseView) {
 
     "use strict";
 
-    var plugin = Backbone.View.extend({
+    var plugin = BaseView.extend({
 
         el: ".main-content",
 
@@ -48,14 +50,6 @@ define([
             _.bindAll(this, 'render', 'addTrigger');
         },
 
-        saved: function() {
-            toastr.success("Successfully saved trigger");
-        },
-
-        deleted: function() {
-            toastr.success("Successfully deleted trigger");
-        },
-
         render: function() {
             this.$el.html(_.template(template, {
                 model: this.model,
@@ -78,18 +72,30 @@ define([
             return this;
         },
 
+        saved: function(model, response) {
+            $("#create").button('reset');
+            if (response.valid) {
+                toastr.success("Successfully created trigger");
+                Backbone.Application.Routers.main.navigate('plugins/details/' + model.get("jobGroup"), {
+                    trigger: true
+                });
+            }
+            else {
+                for (var i in response.errors) {
+                    toastr.error(response.errors[i].message);
+                }
+            }
+        },
+
         addTrigger: function() {
             $("#create").button('loading');
-
-            this.model.save({}, {
-                            success: function(model, response) {
-                                toastr.success("Successfully created trigger");
-                            }});
-
-            $("#create").button('reset');
-
+            var that = this;
+            this.model.save({}, 
+                        {
+                            success: that.saved
+                        });
             return false;
-        },
+        }
     });
 
     return plugin;

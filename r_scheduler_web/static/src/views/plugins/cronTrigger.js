@@ -5,14 +5,15 @@ define([
     'toastr',
     'src/models/cronTrigger',
     'text!src/templates/plugins/cronTrigger.html',
+    'src/views/base',
     "moment",
     "bootstrap-datetimepicker",
     'backbone-stickit'
-], function(Backbone, _, $, toastr, CronTriggerModel, template) {
+], function(Backbone, _, $, toastr, CronTriggerModel, template, BaseView) {
 
     "use strict";
 
-    var plugin = Backbone.View.extend({
+    var plugin = BaseView.extend({
 
         el: ".main-content",
 

@@ -5,9 +5,10 @@ define([
     'toastr',
     'src/models/pluginDetails',
     'text!src/templates/plugins/pluginDetails.html',
+    'src/views/base',
     'backbone-stickit',
     'backgrid-moment'
-], function(Backbone, _, $, toastr, PluginDetailsModel, template) {
+], function(Backbone, _, $, toastr, PluginDetailsModel, template, BaseView) {
 
     "use strict";
 
@@ -15,7 +16,7 @@ define([
     var RemoveCell = Backgrid.RemoveCell = Backgrid.Cell.extend({
 
         events: {
-            "click": "remove"
+            "click": "onRemove"
         },
 
         displayValue: function () {
@@ -29,7 +30,7 @@ define([
             return this;
         },
 
-        remove: function () {
+        onRemove: function () {
 
             var triggerName = this.model.get(this.column.get("name"));
 
@@ -37,7 +38,7 @@ define([
 
             $.ajax({
                 type: "DELETE",
-                async: false,
+                async: true,
                 url: window.urlRoot + "/api/triggers?trigger=" + triggerName,
                 contentType: "application/json",
                 success: function (msg) { 
@@ -48,7 +49,7 @@ define([
         }
     });
 
-    var plugin = Backbone.View.extend({
+    var plugin = BaseView.extend({
 
         el: ".main-content",
 
@@ -63,7 +64,7 @@ define([
         },
 
         initialize: function() {
-            //_.bindAll(this, 'render', 'addPlugin');
+            _.bindAll(this, 'render', 'addSimleTrigger');
         },
 
         columns: [{

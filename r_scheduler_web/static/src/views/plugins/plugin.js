@@ -5,12 +5,13 @@ define([
     'toastr',
     'src/models/plugin',
     'text!src/templates/plugins/plugin.html',
+    'src/views/base',
     'backbone-stickit'
-], function(Backbone, _, $, toastr, PluginModel, template) {
+], function(Backbone, _, $, toastr, PluginModel, template, BaseView) {
 
     "use strict";
 
-    var plugin = Backbone.View.extend({
+    var plugin = BaseView.extend({
 
         el: ".main-content",
 

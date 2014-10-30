@@ -2,12 +2,13 @@ define([
     'backbone',
     'underscore',
     'jquery',
-    'lib/requirejs-text/text!src/templates/main.html'
-], function (Backbone, _, $, template) {
+    'lib/requirejs-text/text!src/templates/main.html',
+    'src/views/base',
+], function (Backbone, _, $, template, BaseView) {
 
     "use strict";
 
-    var view = Backbone.View.extend({
+    var view = BaseView.extend({
 
         el: ".main-content",
 

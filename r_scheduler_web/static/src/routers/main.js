@@ -11,7 +11,8 @@ define([
     'src/models/pluginDetails',
     'src/models/simpleTrigger',
     'src/models/cronTrigger',
-], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginDetailsView, SimpleTriggerView, CronTriggerView, PluginModel, PluginDetailsModel, SimpleTriggerModel, CronTriggerModel) {
+    "src/helpers/helperMethods"
+], function(Backbone, MainView, PluginsListView, PluginsCollection, PluginView, PluginDetailsView, SimpleTriggerView, CronTriggerView, PluginModel, PluginDetailsModel, SimpleTriggerModel, CronTriggerModel, HelperMethods) {
 
     "use strict";
 
@@ -28,19 +29,44 @@ define([
             "plugins/:id/newCronTrigger": "newCronTrigger"
         },
 
-        // home: function() {
-        //     var view = new MainView();
-        //     view.render();
-        // },
+        closeActiveView: function(object) {
+            if (object.activeView) {
+                object.activeView.close();
+            }
+        },
 
-        plugins: function() {
+        setActiveView: function(object, view) {
+            object.activeView = view;
+            //view.render();
+        },
+
+        home: function() {
+            
+            this.closeActiveView(this);
+
             var view = new PluginsListView({
                 collection: new PluginsCollection()
             });
+
+            this.setActiveView(this, view);
+            view.render();
+        },
+
+        plugins: function() {
+
+            this.closeActiveView(this);
+
+            var view = new PluginsListView({
+                collection: new PluginsCollection()
+            });
+            this.setActiveView(this, view);
             view.render();
         },
 
         editPlugin: function(id) {
+
+            this.closeActiveView(this);
+
             var model = new PluginModel({
                 id: id
             }),
@@ -53,6 +79,7 @@ define([
                         model: model
                     });
 
+                    that.setActiveView(that, view);
                     view.render();
                 }
             });
@@ -61,6 +88,9 @@ define([
         },
 
         newPlugin: function() {
+
+            this.closeActiveView(this);
+
             var that = this,
                 model = new PluginModel();
 
@@ -68,12 +98,16 @@ define([
                         model: model
                     });
 
+            this.setActiveView(this, view);
             view.render();
 
             document.title = "Register Plugin";
         },
 
         pluginDetails: function(id) {
+
+            this.closeActiveView(this);
+
             var model = new PluginDetailsModel({
                 id: id
             }),
@@ -86,6 +120,8 @@ define([
                         model: model
                     });
 
+                    //view.render();
+                    that.setActiveView(that, view);
                     view.render();
                 }
             });
@@ -93,29 +129,28 @@ define([
             document.title = "Plugin Details";
         },        
 
-        home: function() {
-            var view = new PluginsListView({
-                collection: new PluginsCollection()
-            });
-            view.render();
-        },
-
         newSimpleTrigger: function(id) {
+
+            this.closeActiveView(this);
             
             var model = new SimpleTriggerModel({
-                jobGroup: id
-            });
+                        jobGroup: id
+                    });
 
             var view = new SimpleTriggerView({
                         model: model
                     });
             
+            //view.render();
+            this.setActiveView(this, view);
             view.render();
 
             document.title = "New Simple Trigger";
         },
 
         newCronTrigger: function(id) {
+
+            this.closeActiveView(this);
             
             var model = new CronTriggerModel({
                 jobGroup: id
@@ -125,6 +160,7 @@ define([
                         model: model
                     });
             
+            this.setActiveView(this, view);
             view.render();
 
             document.title = "New Cron Trigger";

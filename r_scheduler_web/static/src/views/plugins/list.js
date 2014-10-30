@@ -4,8 +4,9 @@ define([
     'jquery',
     'backgrid',
     'text!src/templates/plugins/index.html',
+    'src/views/base',
     'moment'
-], function(Backbone, _, $, Backgrid, template, moment) {
+], function(Backbone, _, $, Backgrid, template, BaseView, moment) {
 
     "use strict";
 
@@ -34,7 +35,7 @@ define([
             var ajaxCall = $.ajax({
                 type: "POST",
                 async: false,
-                url: "http://ruffer-sche-uat:5000/api/plugins/execute",
+                url: window.urlRoot + "/api/plugins/execute",
                 data: "\"" + pluginName + "\"",
                 contentType: "application/json",
             });
@@ -46,7 +47,7 @@ define([
     });
 
 
-    var list = Backbone.View.extend({
+    var list = BaseView.extend({
 
         el: ".main-content",
 
@@ -87,7 +88,7 @@ define([
         },
 
         initialize: function() {
-            //_.bindAll(this, "executePlugin");
+            _.bindAll(this, "render");
         },
 
         render: function() {
@@ -117,12 +118,6 @@ define([
             });
 
             return this;
-        },
-
-        onClose: function() {
-            if (this.grid !== undefined && this.grid !== null) {
-                this.grid.remove();
-            }
         },
 
         newPlugin: function() {
