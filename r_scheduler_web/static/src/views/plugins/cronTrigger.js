@@ -48,10 +48,21 @@ define([
             _.bindAll(this, 'render', 'addTrigger');
         },
 
-        saved: function() {
-            toastr.success("Successfully saved trigger");
+        saved: function(model, response) {
+            $("#create").button('reset');
+            if (response.valid) {
+                toastr.success("Successfully created trigger");
+                Backbone.Application.Routers.main.navigate('plugins/details/' + model.get("jobGroup"), {
+                    trigger: true
+                });
+            }
+            else {
+                for (var i in response.errors) {
+                    toastr.error(response.errors[i].message);
+                }
+            }
         },
-
+        
         deleted: function() {
             toastr.success("Successfully deleted trigger");
         },
@@ -80,13 +91,11 @@ define([
 
         addTrigger: function() {
             $("#create").button('loading');
-
-            this.model.save({}, {
-                            success: function(model, response) {
-                                toastr.success("Successfully created trigger");
-                            }});
-
-            $("#create").button('reset');
+            var that = this;
+            this.model.save({}, 
+                            {
+                                success: that.saved
+                            });
 
             return false;
         },

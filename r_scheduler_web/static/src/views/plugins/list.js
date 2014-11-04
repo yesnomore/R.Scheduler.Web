@@ -2,11 +2,12 @@ define([
     'backbone',
     'underscore',
     'jquery',
+    'toastr',
     'backgrid',
     'text!src/templates/plugins/index.html',
     'src/views/base',
     'moment'
-], function(Backbone, _, $, Backgrid, template, BaseView, moment) {
+], function(Backbone, _, $, toastr, Backgrid, template, BaseView, moment) {
 
     "use strict";
 
@@ -28,21 +29,9 @@ define([
         },
 
         execute: function () {
-
             var pluginName = this.model.get(this.column.get("name"));
-            //alert(pluginName);
-
-            var ajaxCall = $.ajax({
-                type: "POST",
-                async: false,
-                url: window.urlRoot + "/api/plugins/execute",
-                data: "\"" + pluginName + "\"",
-                contentType: "application/json",
-            });
-
-            if (ajaxCall.status == 204){ //No Response 204
-                alert("done");
-            }
+            $('#myModal').data('pluginName', pluginName);
+            $('#myModal').modal();
         }
     });
 
@@ -89,6 +78,9 @@ define([
 
         initialize: function() {
             _.bindAll(this, "render");
+
+            this.events["click #executeConfirm"] = "executePlugin";
+            this.delegateEvents();
         },
 
         render: function() {
@@ -103,7 +95,6 @@ define([
 
             this.grid = new Backgrid.Grid({
                 columns: this.columns,
-                //row: ClickableRow,
                 collection: this.collection
             });
 
@@ -121,13 +112,42 @@ define([
         },
 
         newPlugin: function() {
-            // Backbone.Application.Routers.students.navigate('students/new?returnUrl=students', {
-            //     trigger: true
-            // });
             Backbone.Application.Routers.main.navigate('plugins/new', {
                 trigger: true
             });
-        }
+        },
+
+        executePlugin: function() {
+            $('#myModal').on('hidden.bs.modal', this.modalHiddenCallback);
+            $('#myModal').modal('hide');
+            return false;
+        },
+
+        modalHiddenCallback: function() {
+            //var pluginName = this.model.get(this.column.get("name"));
+            var pluginName = $('#myModal').data('pluginName');
+
+            var ajaxCall = $.ajax({
+                type: "POST",
+                async: false,
+                url: window.urlRoot + "/api/plugins/execute",
+                data: "\"" + pluginName + "\"",
+                contentType: "application/json",
+            }).done(function(response) {
+                if (response.valid) {
+                    toastr.success("Plugin successfully sent for execution");
+                }
+                else {
+                    for (var i in response.errors) {
+                        toastr.error(response.errors[i].message);
+                    }
+                }
+            }).fail(function() {
+                toastr.success("Error sending plugin for execution");
+            });
+
+            return false;
+        },
     });
 
     return list;

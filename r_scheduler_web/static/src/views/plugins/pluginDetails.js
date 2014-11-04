@@ -12,7 +12,6 @@ define([
 
     "use strict";
 
-
     var RemoveCell = Backgrid.RemoveCell = Backgrid.Cell.extend({
 
         events: {
@@ -31,21 +30,11 @@ define([
         },
 
         onRemove: function () {
-
             var triggerName = this.model.get(this.column.get("name"));
-
-            var that = this;
-
-            $.ajax({
-                type: "DELETE",
-                async: true,
-                url: window.urlRoot + "/api/triggers?trigger=" + triggerName,
-                contentType: "application/json",
-                success: function (msg) { 
-                    that.model.collection.remove(that.model);
-                },
-                error: function (err) { alert(err.responseText); }
-            });
+            $('#myModal').data('triggerName', triggerName);
+            $('#myModal').data('collection', this.model.collection);
+            $('#myModal').data('model', this.model);
+            $('#myModal').modal();
         }
     });
 
@@ -65,6 +54,9 @@ define([
 
         initialize: function() {
             _.bindAll(this, 'render', 'addSimleTrigger');
+
+            this.events["click #removeConfirm"] = "removeTrigger";
+            this.delegateEvents();
         },
 
         columns: [{
@@ -157,7 +149,40 @@ define([
             Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('name') + '/newCronTrigger', {
                 trigger: true
             });
-        }
+        },
+
+        removeTrigger: function() {
+            $('#myModal').on('hidden.bs.modal', this.modalHiddenCallback);
+            $('#myModal').modal('hide');
+            return false;
+        },
+
+        modalHiddenCallback: function() {
+            var triggerName = $('#myModal').data('triggerName');
+
+            $.ajax({
+                type: "DELETE",
+                async: true,
+                url: window.urlRoot + "/api/triggers?trigger=" + triggerName,
+                contentType: "application/json",
+            }).done(function(response) {
+                if (response.valid) {
+                    var collection = $('#myModal').data('collection');
+                    var model = $('#myModal').data('model');
+                    collection.remove(model);
+                    toastr.success("Trigger successfully removed");
+                }
+                else {
+                    for (var i in response.errors) {
+                        toastr.error(response.errors[i].message);
+                    }
+                }
+            }).fail(function() {
+                toastr.success("Error removing trigger");
+            });
+
+            return false;
+        },
     });
 
     return plugin;
