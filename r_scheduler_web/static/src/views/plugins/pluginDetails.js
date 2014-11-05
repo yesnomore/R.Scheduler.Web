@@ -38,6 +38,46 @@ define([
         }
     });
 
+    var DetailsCell = Backgrid.DetailsCell = Backgrid.Cell.extend({
+
+        events: {
+            "click": "onShowDetails"
+        },
+
+        displayValue: function () {
+            return "<a>More Details</a>";
+        },
+
+        render: function () {
+            this.$el.empty();
+            this.$el.append(this.displayValue());
+            this.delegateEvents();
+            return this;
+        },
+
+        onShowDetails: function () {
+            var triggerType = this.model.get("type");
+            var triggerName = this.model.get("name");
+            var triggerGroup = this.model.get("group");
+            var jobName = this.model.get("jobName");
+            var jobGroup = this.model.get("jobGroup");
+            var startDateTime = this.model.get("startTimeUtc");
+            var previousFireDateTime = this.model.get("previousFireTimeUtc");
+            var nextFireDateTime = this.model.get("nextFireTimeUtc");
+            var description = this.model.get("description");
+            $('#triggerType').val(triggerType);
+            $('#triggerName').val(triggerName);
+            $('#triggerGroup').val(triggerGroup);
+            $('#jobName').val(jobName);
+            $('#jobGroup').val(jobGroup);
+            $('#startDateTime').val(startDateTime);
+            $('#previousFireDateTime').val(previousFireDateTime);
+            $('#nextFireDateTime').val(nextFireDateTime);
+            $('#description').val(description);
+            $('#myModalDetails').modal();
+        }
+    });
+
     var plugin = BaseView.extend({
 
         el: ".main-content",
@@ -75,23 +115,6 @@ define([
             editable: false,
             cell: "string"
         },{
-            name: "jobName",
-            label: "Job Name",
-            editable: false,
-            cell: "string"
-        },{
-            name: "jobGroup",
-            label: "Job Group",
-            editable: false,
-            cell: "string"
-        },{
-            name: "startTimeUtc",
-            label: "Start Time",
-            cell: Backgrid.Extension.MomentCell.extend({
-              modelFormat: "YYYY/M/D/H/m/s",
-             displayFormat: "YYYY-MMM-DD HH:mm:ss"
-            })
-        },{
             name: "previousFireTimeUtc",
             label: "Previous Fire Time",
             editable: false,
@@ -108,15 +131,15 @@ define([
               displayFormat: "YYYY-MMM-DD HH:mm:ss"
             })
         },{
-            name: "description",
-            label: "Description",
-            editable: false,
-            cell: "string"
-        },{
             name: "name",
             label: "",
             editable: false,
             cell: "remove"
+        },{
+            name: "name",
+            label: "",
+            editable: false,
+            cell: "details"
         }],
 
         render: function() {
@@ -187,5 +210,3 @@ define([
 
     return plugin;
 });
-
-
