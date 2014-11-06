@@ -61,7 +61,7 @@ define([
             cell: "execute",
             editable: false,
         },{
-            name: "name",
+            name: "id",
             label: "",
             cell: "html",
             editable: false,

@@ -163,13 +163,13 @@ define([
         },
 
         addSimleTrigger: function() {
-            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('name') + '/newSimpleTrigger', {
+            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('id') + '/newSimpleTrigger', {
                 trigger: true
             });
         },
 
         addCronTrigger: function() {
-            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('name') + '/newCronTrigger', {
+            Backbone.Application.Routers.main.navigate('plugins/' + this.model.get('id') + '/newCronTrigger', {
                 trigger: true
             });
         },

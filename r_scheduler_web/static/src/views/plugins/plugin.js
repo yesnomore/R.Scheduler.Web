@@ -51,11 +51,22 @@ define([
             $("#create").button('loading');
 
             this.model.save({}, {
-                            success: function(model, response) {
+                success:function(model, response) {
+                    
+                            if (response.valid) {
                                 toastr.success("Successfully registered plugin");
-                            }});
-
-            $("#create").button('reset');
+                            }
+                            else {
+                                for (var i in response.errors) {
+                                    toastr.error(response.errors[i].message);
+                                }
+                            }
+                            $("#create").button('reset');
+                        },
+                error:  function() {
+                            toastr.error("Error registering plugin");
+                        }
+            });
 
             return false;
         },
