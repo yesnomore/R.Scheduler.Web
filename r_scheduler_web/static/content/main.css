@@ -12,6 +12,8 @@
 
 @import url('bootstrap.min.css');
 
+@import url('toastr.css');
+
 /*@import url('../Scripts/app/lib/backgrid/extensions/filter/backgrid-filter.css');
 
 @import url('../Scripts/app/lib/backgrid/extensions/paginator/backgrid-paginator.css');
