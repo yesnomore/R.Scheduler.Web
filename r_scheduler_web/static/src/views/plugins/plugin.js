@@ -50,11 +50,20 @@ define([
         addPlugin: function() {
             $("#create").button('loading');
 
+            var successMsg = "Successfully registered plugin";
+            if(this.model.get('id') != null)
+            {
+                successMsg = "Successfully updated plugin";
+            }
+
             this.model.save({}, {
                 success:function(model, response) {
                     
                             if (response.valid) {
-                                toastr.success("Successfully registered plugin");
+                                toastr.success(successMsg);
+                                Backbone.Application.Routers.main.navigate('plugins', {
+                                    trigger: true
+                                });
                             }
                             else {
                                 for (var i in response.errors) {
