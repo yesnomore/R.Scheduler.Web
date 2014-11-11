@@ -84,7 +84,7 @@ define([
 
         events: {
             "click #newSimpleTrigger": "addSimleTrigger",
-            "click #newCronTrigger": "addCronTrigger",
+            "click #newCronTrigger": "addCronTrigger"
         },
 
         bindings: {
@@ -187,7 +187,7 @@ define([
                 type: "DELETE",
                 async: true,
                 url: window.urlRoot + "/api/triggers?trigger=" + triggerName,
-                contentType: "application/json",
+                contentType: "application/json"
             }).done(function(response) {
                 if (response.valid) {
                     var collection = $('#myModal').data('collection');
@@ -205,7 +205,7 @@ define([
             });
 
             return false;
-        },
+        }
     });
 
     return plugin;

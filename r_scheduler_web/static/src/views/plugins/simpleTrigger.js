@@ -20,6 +20,7 @@ define([
 
         events: {
             "click #create": "addTrigger",
+            "click #cancel": "cancelAddTrigger"
         },
 
         bindings: {
@@ -52,7 +53,7 @@ define([
 
         render: function() {
             this.$el.html(_.template(template, {
-                model: this.model,
+                model: this.model
             }));
 
             this.$el.find("[datepicker='']").each(function(index, element) {
@@ -63,7 +64,7 @@ define([
                     pickTime: true,                 //en/disables the time picker
                     useMinutes: true,               //en/disables the minutes picker
                     useSeconds: true,               //en/disables the seconds picker
-                    useCurrent: true,  
+                    useCurrent: true
                 });
             });
 
@@ -85,6 +86,12 @@ define([
                     toastr.error(response.errors[i].message);
                 }
             }
+        },
+
+        cancelAddTrigger: function() {
+            Backbone.Application.Routers.main.navigate('plugins/details/' + this.model.get("jobGroup"), {
+                    trigger: true
+                });
         },
 
         addTrigger: function() {

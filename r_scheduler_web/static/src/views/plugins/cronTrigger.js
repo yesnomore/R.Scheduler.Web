@@ -19,6 +19,7 @@ define([
 
         events: {
             "click #create": "addTrigger",
+            "click #cancel": "cancelAddTrigger"
         },
 
         bindings: {
@@ -80,13 +81,19 @@ define([
                     pickTime: true,                 //en/disables the time picker
                     useMinutes: true,               //en/disables the minutes picker
                     useSeconds: true,               //en/disables the seconds picker
-                    useCurrent: true,  
+                    useCurrent: true
                 });
             });
 
             this.stickit();
 
             return this;
+        },
+
+        cancelAddTrigger: function() {
+            Backbone.Application.Routers.main.navigate('plugins/details/' + this.model.get("jobGroup"), {
+                    trigger: true
+                });
         },
 
         addTrigger: function() {
@@ -98,7 +105,7 @@ define([
                             });
 
             return false;
-        },
+        }
     });
 
     return plugin;

@@ -21,7 +21,7 @@ define([
         initialize: function() {
             //Backbone.Model.prototype.initialize.call(this);
             //_.bindAll(this);
-        },
+        }
     });
 
     return model;

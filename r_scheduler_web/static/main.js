@@ -15,8 +15,7 @@ require.config({
         "lunr": 'lib/lunr/lunr',
         "backgrid-filter": 'lib/backgrid/extensions/filter/backgrid-filter',
         'backgrid-moment': 'lib/backgrid/extensions/moment-cell/backgrid-moment-cell',
-        'bootstrap-datetimepicker': 'lib/bootstrap-datetimepicker',
-        // 'backgrid-paginator': 'lib/backgrid-paginator.min',
+        'bootstrap-datetimepicker': 'lib/bootstrap-datetimepicker'
     },
     shim: {        
         "bootstrap": {
@@ -55,7 +54,7 @@ require.config({
         'bootstrap-datetimepicker': {
             deps: ["jquery"],
             exports: "$"
-        },
+        }
     },
     waitSeconds: 200
 });

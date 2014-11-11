@@ -59,7 +59,7 @@ define([
             name: "name",
             label: "",
             cell: "execute",
-            editable: false,
+            editable: false
         },{
             name: "id",
             label: "",
@@ -132,7 +132,7 @@ define([
                 async: false,
                 url: window.urlRoot + "/api/plugins/execute",
                 data: "\"" + pluginName + "\"",
-                contentType: "application/json",
+                contentType: "application/json"
             }).done(function(response) {
                 if (response.valid) {
                     toastr.success("Plugin successfully sent for execution");
@@ -147,7 +147,7 @@ define([
             });
 
             return false;
-        },
+        }
     });
 
     return list;

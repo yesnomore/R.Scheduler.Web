@@ -17,6 +17,7 @@ define([
 
         events: {
             "click #create": "addPlugin",
+            "click #cancel": "cancelAddPlugin"
         },
 
         bindings: {
@@ -39,12 +40,16 @@ define([
 
         render: function() {
             this.$el.html(_.template(template, {
-                model: this.model,
+                model: this.model
            }));
 
             this.stickit();
 
             return this;
+        },
+
+        cancelAddPlugin: function() {
+            Backbone.Application.Routers.main.navigate('plugins', {trigger: true});
         },
 
         addPlugin: function() {
@@ -78,7 +83,7 @@ define([
             });
 
             return false;
-        },
+        }
     });
 
     return plugin;
