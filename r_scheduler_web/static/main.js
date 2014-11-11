@@ -1,7 +1,6 @@
 require.config({
     waitSeconds: 30,
     urlArgs: "version=0.0",
-    //baseUrl: "/static",
     paths: {
         "jquery": 'lib/jquery-1.9.1',
         "toastr": 'lib/toastr',
@@ -60,10 +59,7 @@ require.config({
 });
 
 window.require = require;
-//window.urlRoot = "http://ruffer-sche-uat:5000";
-window.urlRoot = "http://localhost:5000";
-//window.urlRoot = "http://ruffer-schedule:5000";
-
+window.urlRoot = "http://localhost:5001";
 
 require(['backbone',
          'jquery',
@@ -72,8 +68,6 @@ require(['backbone',
          'require',
 ],
 function (Backbone, $, Router, bootstrap, require) {
-
-    //window.define = define;
 
     $.support.cors = true;
 
